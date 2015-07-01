@@ -28,9 +28,9 @@ public class CourseManagedBean implements Serializable{
 	@PostConstruct
 	public void init() {
 		try {
-			final String userName = CourseService.getInstance().getUserLoggedIn().getEmailAddress();
+			final String loginName = CourseService.getInstance().getUserLoggedIn().getLogin();
 			this.competenceDto = CourseService.getInstance().
-									getAllCompetencen(COURSE_CONTEXT, COMPULSORY_ALL, NO_CACHE, userName);
+									getAllCompetencen(COURSE_CONTEXT, COMPULSORY_ALL, NO_CACHE, loginName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -46,8 +46,8 @@ public class CourseManagedBean implements Serializable{
 	
 	public void updateCompetencen(CompetenceDto competence){
         try {
-        	final String userName = CourseService.getInstance().getUserLoggedIn().getEmailAddress();
-        	if(CourseService.getInstance().learnedCompetence(COURSE_CONTEXT, CREATOR, ROLR_TEACHER, userName, competence.getName(), EVIDENCES)){
+        	final String loginName = CourseService.getInstance().getUserLoggedIn().getLogin();
+        	if(CourseService.getInstance().learnedCompetence(COURSE_CONTEXT, CREATOR, ROLR_TEACHER, loginName, competence.getName(), EVIDENCES)){
         		competence.setLearned(true);
         		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
                         "Lernproject wird erfolgreich gelernt!" ,""));

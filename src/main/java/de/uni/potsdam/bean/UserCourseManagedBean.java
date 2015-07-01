@@ -30,8 +30,9 @@ public class UserCourseManagedBean implements Serializable{
 	@PostConstruct
 	public void init() {
 		try {
-			userName = CourseService.getInstance().getUserLoggedIn().getEmailAddress(); 
-			userCompetencen = CourseService.getInstance().getCompetencenFromUser(COURSE_CONTEXT, COMPULSORY_ALL, NO_CACHE, userName);
+			final String loginName = CourseService.getInstance().getUserLoggedIn().getLogin();
+			userName = CourseService.getInstance().getUserLoggedIn().getFullName(); 
+			userCompetencen = CourseService.getInstance().getCompetencenFromUser(COURSE_CONTEXT, COMPULSORY_ALL, NO_CACHE, loginName);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -71,8 +72,9 @@ public class UserCourseManagedBean implements Serializable{
 	
 	public void getCompetencenLink() {
 		try {
-			competenceLinks = CourseService.getInstance().getCompetencenLink(userName, selectedCompetence);
-			userCompetencen = CourseService.getInstance().getCompetencenFromUser(COURSE_CONTEXT, COMPULSORY_ALL, NO_CACHE, userName);
+			final String loginName = CourseService.getInstance().getUserLoggedIn().getLogin();
+			competenceLinks = CourseService.getInstance().getCompetencenLink(loginName, selectedCompetence);
+			userCompetencen = CourseService.getInstance().getCompetencenFromUser(COURSE_CONTEXT, COMPULSORY_ALL, NO_CACHE, loginName);
 		} catch (Exception e) {
 			e.printStackTrace();
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,
